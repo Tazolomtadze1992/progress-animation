@@ -15,7 +15,7 @@
   grid-template-columns: 1fr auto;
   align-items: end;
   gap: 8px 20px;
-  margin-bottom: 86px;
+  margin-bottom: 52px;
 }
 
 .eyebrow {
@@ -48,7 +48,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 76px 0 24px;
+  padding: 8px 0 24px;
 }
 
 .rail {
@@ -94,42 +94,6 @@
   transform: scaleX(1.05);
   transform-origin: left center;
   background: currentColor;
-}
-
-.indicator {
-  position: absolute;
-  left: 0;
-  bottom: 54px;
-  display: grid;
-  justify-items: center;
-  width: 92px;
-  will-change: transform;
-}
-
-.indicatorBadge {
-  display: grid;
-  place-items: center;
-  width: 58px;
-  height: 58px;
-  color: #fff;
-  background: #14884d;
-  border-radius: 50%;
-  font-size: 15px;
-  font-variant-numeric: tabular-nums;
-  font-weight: 780;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
-    0 14px 24px rgba(20, 108, 67, 0.2),
-    0 2px 5px rgba(12, 52, 33, 0.12);
-}
-
-.indicatorLine {
-  width: 2px;
-  height: 24px;
-  margin-top: 4px;
-  border-radius: 999px;
-  background: #14884d;
-  opacity: 0.42;
 }
 
 .controls {
@@ -224,7 +188,7 @@
   }
 
   .header {
-    margin-bottom: 56px;
+    margin-bottom: 42px;
   }
 
   .title {

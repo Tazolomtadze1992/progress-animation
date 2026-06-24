@@ -163,6 +163,9 @@ function MobileCardContext({ progress }) {
         <p className={styles.cardTitle}>კარლამ ლიკარტიანის დაბადების დღე</p>
         <div className={styles.cardAmount}>250.00₾</div>
         <p className={styles.cardSubtitle}>შეგროვებული თანხა</p>
+        <div className={styles.cardProgressLabel} aria-live="polite">
+          {progress}%
+        </div>
 
         <div className={styles.cardRail}>
           <ProgressRail progress={progress} />

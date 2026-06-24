@@ -255,10 +255,21 @@
 }
 
 .cardSubtitle {
-  margin: 8px 0 28px;
+  margin: 8px 0 8px;
   color: rgba(255, 255, 255, 0.88);
   font-size: 15px;
   font-weight: 720;
+}
+
+.cardProgressLabel {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 17px;
+  font-weight: 780;
+  line-height: 1;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 160ms ease;
 }
 
 .cardRail {

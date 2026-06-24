@@ -1,0 +1,254 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 18px;
+}
+
+.shell {
+  width: min(760px, 100%);
+  color: #172019;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 8px 20px;
+  margin-bottom: 86px;
+}
+
+.eyebrow {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #4d6658;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 740;
+}
+
+.status {
+  min-width: 72px;
+  color: #146c43;
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 760;
+  text-align: right;
+}
+
+.tracker {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 76px 0 24px;
+}
+
+.rail {
+  position: relative;
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+}
+
+.railLayer {
+  display: flex;
+  align-items: center;
+  color: #dbe2dc;
+}
+
+.activeLayer {
+  position: absolute;
+  inset: 0 auto auto 0;
+  color: #17a05d;
+  will-change: clip-path;
+}
+
+.segment {
+  display: flex;
+  align-items: center;
+  width: clamp(58px, 16vw, 148px);
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+}
+
+.bar {
+  height: 5px;
+  min-width: 40px;
+  flex: 1 1 auto;
+  transform: scaleX(1.04);
+  transform-origin: left center;
+  background: currentColor;
+}
+
+.indicator {
+  position: absolute;
+  left: 0;
+  bottom: 54px;
+  display: grid;
+  justify-items: center;
+  width: 92px;
+  will-change: transform;
+}
+
+.indicatorBadge {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  color: #fff;
+  background: #14884d;
+  border-radius: 50%;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 780;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
+    0 14px 24px rgba(20, 108, 67, 0.2),
+    0 2px 5px rgba(12, 52, 33, 0.12);
+}
+
+.indicatorLine {
+  width: 2px;
+  height: 24px;
+  margin-top: 4px;
+  border-radius: 999px;
+  background: #14884d;
+  opacity: 0.42;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.stepButton,
+.primaryButton,
+.secondaryButton {
+  min-height: 40px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.stepButton {
+  min-width: 62px;
+  color: #3d4d43;
+  background: #eef2ee;
+  box-shadow: inset 0 0 0 1px rgba(23, 32, 25, 0.08);
+}
+
+.stepButton:hover:not(:disabled) {
+  background: #e4ebe5;
+}
+
+.stepButton[data-selected="true"] {
+  color: #fff;
+  background: #14884d;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 8px 18px rgba(20, 108, 67, 0.18);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: 0 16px;
+}
+
+.primaryButton {
+  color: #fff;
+  background: #172019;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: #263329;
+}
+
+.secondaryButton {
+  color: #263329;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(23, 32, 25, 0.12);
+}
+
+.secondaryButton:hover {
+  background: #f5f7f4;
+}
+
+.stepButton:active:not(:disabled),
+.primaryButton:active:not(:disabled),
+.secondaryButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.stepButton:disabled,
+.primaryButton:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+@media (max-width: 560px) {
+  .page {
+    place-items: start center;
+    padding-top: 48px;
+  }
+
+  .header {
+    margin-bottom: 56px;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .status {
+    font-size: 24px;
+  }
+
+  .tracker {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-inline: 46px;
+  }
+
+  .segment {
+    width: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stepButton,
+  .primaryButton,
+  .secondaryButton {
+    transition: none;
+  }
+}

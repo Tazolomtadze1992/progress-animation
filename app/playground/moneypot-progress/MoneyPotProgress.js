@@ -47,44 +47,41 @@ export default function MoneyPotProgress() {
 
   const getTargetMeasurements = () => {
     const rail = railRef.current;
+    const activeLayer = activeLayerRef.current;
     const indicator = indicatorRef.current;
     const target = activeTargetRef.current;
 
-    if (!rail || !indicator || !target) {
+    if (!rail || !activeLayer || !indicator || !target) {
       return null;
     }
 
-    let targetLeft = target.offsetLeft;
-    let offsetParent = target.offsetParent;
+    const targetRect = target.getBoundingClientRect();
+    const activeLayerRect = activeLayer.getBoundingClientRect();
+    const indicatorParentRect = (
+      indicator.offsetParent || rail
+    ).getBoundingClientRect();
+    const targetCenterX = targetRect.left + targetRect.width / 2;
+    let clipPath = getInitialClipPath();
 
-    // Match Emil's offset accumulation so nested active dots resolve against the rail.
-    while (offsetParent && offsetParent !== rail.offsetParent) {
-      targetLeft += offsetParent.offsetLeft;
-      offsetParent = offsetParent.offsetParent;
+    if (currentIndex === MILESTONES.length - 1) {
+      clipPath = "inset(0 0% 0 0)";
+    } else if (currentIndex > 0) {
+      const revealPx = targetRect.right - activeLayerRect.left;
+      const revealPercent = (revealPx / activeLayerRect.width) * 100;
+      clipPath = `inset(0 ${100 - revealPercent}% 0 0)`;
     }
 
     const translateX =
-      targetLeft + target.offsetWidth / 2 - indicator.offsetWidth / 2;
+      targetCenterX - indicatorParentRect.left - indicator.offsetWidth / 2;
 
-    return { target, translateX };
+    return {
+      clipPath,
+      translateX,
+    };
   };
 
-  const getTargetClipPath = (target) => {
-    const activeLayer = activeLayerRef.current;
-
-    if (!activeLayer || !target) {
-      return "inset(0 100% 0 0)";
-    }
-
-    const lastIndex = MILESTONES.length - 1;
-    let reveal = (currentIndex / lastIndex) * 100;
-
-    // Emil's middle-step adjustment reveals the selected dot fully, not half-way.
-    if (currentIndex > 0 && currentIndex < lastIndex) {
-      reveal += (target.offsetWidth / 2 / activeLayer.offsetWidth) * 100;
-    }
-
-    return `inset(0 ${100 - reveal}% 0 0)`;
+  const getInitialClipPath = () => {
+    return "inset(0 100% 0 0)";
   };
 
   useLayoutEffect(() => {
@@ -97,7 +94,7 @@ export default function MoneyPotProgress() {
     }
 
     const targetTransform = `translateX(${measurements.translateX}px)`;
-    const targetClipPath = getTargetClipPath(measurements.target);
+    const targetClipPath = measurements.clipPath;
 
     if (!hasMountedRef.current || prefersReducedMotion()) {
       hasMountedRef.current = true;
@@ -107,7 +104,7 @@ export default function MoneyPotProgress() {
     }
 
     const currentTransform = `translateX(${getTranslateX(indicator)}px)`;
-    const currentClipPath = getClipPath(activeLayer, "inset(0 100% 0 0)");
+    const currentClipPath = getClipPath(activeLayer, getInitialClipPath());
 
     indicator.getAnimations().forEach((animation) => animation.cancel());
     activeLayer.getAnimations().forEach((animation) => animation.cancel());
@@ -252,6 +249,7 @@ function RailLayer({ activeLayerRef, activeTargetRef, currentIndex, tone }) {
         <div className={styles.segment} key={value}>
           <span
             ref={isActive && index === currentIndex ? activeTargetRef : null}
+            data-milestone-index={index}
             className={styles.dot}
           />
           <span className={styles.bar} />
@@ -263,6 +261,7 @@ function RailLayer({ activeLayerRef, activeTargetRef, currentIndex, tone }) {
             ? activeTargetRef
             : null
         }
+        data-milestone-index={MILESTONES.length - 1}
         className={styles.dot}
       />
     </div>
